@@ -164,4 +164,172 @@ const mentorList = {
   ...mentors2,
 };
 
-// now rest
+// Destructure
+
+interface Person {
+  name: string;
+  age: number;
+}
+
+function getPerson(person: Person): string {
+  return `My name is ${person.name} and I am ${person.age} years old`;
+}
+
+getPerson({ name: "Razu", age: 25 });
+
+let person2: Person = {
+  name: "Razu",
+  age: 25,
+};
+
+getPerson(person);
+
+person = { name: "Razu", age: 25 };
+
+getPerson(person);
+
+const info = {
+  name: "razu",
+  village: {
+    name: "kandakul",
+    address: "Boalmari",
+  },
+  myage: 25,
+  hobbies: ["reading", "coding"],
+};
+
+const {
+  name,
+  village: { address: homeAddress }, // alias
+  myage,
+  hobbies,
+} = info;
+
+const arrofFields: string[] = ["name", "village", "myage", "hobbies"];
+
+const [, , yage, ...reset] = arrofFields;
+
+// 1.9  type alias
+type Student = {
+  name: string;
+  age: number;
+  contact: string;
+  hobbies?: string[];
+};
+
+const student1: Student = {
+  name: "razu",
+  age: 25,
+  contact: "9876543210",
+  hobbies: ["reading", "coding"],
+};
+
+const student2: Student = {
+  name: "Sakib",
+  age: 26,
+  contact: "9876543233",
+};
+
+// alias type in function
+
+type AddNew = (num1: number, num2: number) => number;
+
+const addNew: AddNew = (num1: number, num2: number): number => num1 + num2;
+
+// 1.10 Union  types
+
+type FrontendDeveloper = "Frontend" | "Fullstack";
+
+const newDeveloper: FrontendDeveloper = "Frontend";
+
+type Teacher = {
+  name: string;
+  age: number;
+  bloodGroup: "A" | "B" | "AB" | "O";
+  gender: "Male" | "Female";
+};
+
+const teacher1: Teacher = {
+  name: "Razu",
+  age: 25,
+  bloodGroup: "A",
+  gender: "Male",
+};
+
+const teacher2: Teacher = {
+  name: "Sathiya",
+  age: 20,
+  bloodGroup: "O",
+  gender: "Female",
+};
+
+// and Intersection types
+type Person4 = { name: string };
+type Employee = { salary: number };
+
+type Staff = Person4 & Employee;
+
+let emp: Staff = {
+  name: "Razu",
+  salary: 50000,
+};
+
+// 1.11 Ternary Operator (? :)
+// condition ? expressionIfTrue : expressionIfFalse;
+
+const isAdmin1: boolean = true;
+const isAdmin2: boolean = false;
+
+const isAdmin3: boolean = isAdmin1 ? true : false;
+
+const isAdmin4: boolean = isAdmin2 ? true : false;
+
+let age1: number = 18;
+let message = age1 >= 18 ? "You are adult" : "You are minor";
+console.log(message); // "You are adult"
+
+{
+  // 1.12 Nullish coalescing operator (??)
+  let name: string | null = "Razu";
+
+  name = name ?? "Molla";
+
+  name = name ?? "Sojib";
+
+  let user = {
+    name: "Razu",
+    address: {
+      city: "Dhaka",
+    },
+    contact: {
+      phone: "9876543210",
+    },
+  };
+
+  console.log(user?.address?.city); // "Dhaka"
+  console.log(user?.contact?.phone); // undefined (no error!)
+}
+
+// Nullish Coalescing Operator (??)
+// Used to provide a default value when a variable is null or undefined,
+// but not for falsey values like 0, "", or false.
+
+//1.12 Never,unknown and nullable type
+
+const throwError = (msg: string): never => {
+  throw new Error(msg);
+};
+
+console.log(throwError("Error"));
+
+// unknown
+let userInput: unknown;
+
+userInput = "Hello";
+userInput = 123;
+
+if (typeof userInput === "string") {
+  console.log(userInput.toUpperCase()); // ✅ Safe to use
+}
+
+// userInput.toFixed(); // ❌ Error (TypeScript doesn't know it's a number)
