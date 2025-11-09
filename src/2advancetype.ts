@@ -265,7 +265,7 @@
 
   const resGenericObj = createArrayWithGeneric<User>({
     id: 222,
-    name: "Mr. Pashan",
+    name: "Mr. Razu",
   });
 
   // function with tuple
@@ -341,6 +341,128 @@
     email: "razu@gmail.com",
     hasWatch: "Apple Watch",
   });
+
+  //
+}
+
+{
+  // generic constraint with keyof operator
+  type Vehicle = {
+    bike: string; //  key :value
+    car: string;
+    ship: string;
+  };
+
+  type Owner = "bike" | "car" | "ship"; // manually
+  type Owner2 = keyof Vehicle;
+
+  //   const user = {
+  //   name: "Mr. razu",
+  //   age: 26,
+  //   address: "ctg",
+  // };
+
+  //  user["name"]  => "Mr. razu"
+  //  user["age"]  => 26
+
+  const getPropertyvalue0 = <X, Y extends keyof X>(obj: X, key: Y) => {
+    return obj[key];
+  };
+
+  const getPropertyValue = <X, Y extends keyof X>(obj: X, key: Y) => {
+    return obj[key];
+  };
+
+  const user = {
+    name: "Mr. razu",
+    age: 26,
+    address: "ctg",
+  };
+
+  const car = {
+    model: "Toyota 100",
+    year: 200,
+  };
+
+  const result1 = getPropertyValue(user, "address");
+  const result2 = getPropertyValue(car, "model");
+  // const result3 = getPropertyValue(car, "size");
+
+  // obj[key]   26
+
+  // 2.7
+}
+
+{
+  //2.8 promise
+
+  type Something = { something: string };
+
+  // simulate
+  const createPromise = (): Promise<Something> => {
+    return new Promise<Something>((resolve, reject) => {
+      const data: Something = { something: "something" };
+      if (data) {
+        resolve(data);
+      } else {
+        reject("failed to load data");
+      }
+    });
+  };
+
+  // calling create promise function
+  const showData = async (): Promise<Something> => {
+    const data: Something = await createPromise();
+    return data;
+    // console.log(data);
+  };
+
+  showData();
+
+  // async operation
+  type Todo = {
+    id: number;
+    userId: number;
+    title: string;
+    completed: boolean;
+  };
+
+  const getTodo = async (): Promise<Todo> => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+    const data = await res.json();
+    return data;
+  };
+
+  getTodo();
+
+  //
+}
+
+{
+  //2.9 conditional type
+
+  // type a1 = null; // x wil be true
+  type a1 = number;
+
+  type x = a1 extends null ? true : false; // conditional type
+
+  // type b1 = undefined; // a1= num then- y wil be undefined
+  type b1 = string; // a1= num then- b1 - string , y wil be any
+  type y = a1 extends null ? true : b1 extends undefined ? undefined : any;
+
+  type Sheikh = {
+    bike: string;
+    car: string;
+    ship: string;
+    plane: string;
+  };
+
+  //keyof Sheikh   "bike" | "car" | "ship"
+
+  // car ase kina / bike ase kina / ship kina / tractor ase kina
+  type CheckVehicle<T> = T extends keyof Sheikh ? true : false;
+
+  type HasPlane = CheckVehicle<"bike">; // true
 
   //
 }
