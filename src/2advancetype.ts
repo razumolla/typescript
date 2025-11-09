@@ -466,3 +466,102 @@
 
   //
 }
+
+{
+  //2.10 mapped types
+
+  const arrOfNumbers: number[] = [1, 4, 5];
+
+  // const arrOfStrings : string[] = ['1','4','5']
+  const arrOfStrings: string[] = arrOfNumbers.map(
+    (number) => number.toString() // 1 => "1"
+  );
+  console.log(arrOfStrings);
+
+  type AreaNumber = {
+    height: number;
+    width: number;
+  };
+
+  type Height = AreaNumber["height"]; // look up type
+  // type AreaString = {
+  //   height: string;
+  //   width: string
+  // }
+  // keyof AreaNumber => "height"|"width"
+
+  // T => {height:string;width:number}
+  // key => T["width"]
+  type AreaString<T> = {
+    [key in keyof T]: T[key]; // T["height"]  = string ; type return kore -->  etake look up type bole
+  };
+
+  const area1: AreaString<{ height: string; width: number }> = {
+    height: "100",
+    width: 50,
+  };
+
+  //
+}
+
+{
+  // 2.11 utility types
+  //1. pick
+  type Person = {
+    name: string;
+    age: number;
+    email?: string;
+    contact: string;
+  };
+
+  type Name = Pick<Person, "name" | "age">;
+  // type Age = Pick<Person, "age">;
+  // that means amra je property gulo caibo , segulo ekta object akare diye dibe
+  //
+
+  // 2. Omit --> Pick er ulta : property bad dibe
+
+  type ContactInfo = Omit<Person, "name" | "age">; // Baki 2 ta field return korbe
+
+  // 3. Required : sob gulo peroperty required hoye return korbe
+  type PersonRequired = Required<Person>;
+
+  // 4. Partial : sob gulo optional property return korbe
+  type PersonPartial = Partial<Person>;
+
+  // 5. Readonly : sob gulo property read only return korbe
+
+  type PersonReadonly = Readonly<Person>;
+  // const person1: Person = {
+  const person1: PersonReadonly = {
+    name: "Razu",
+    age: 100,
+    email: "razu@gmail.com",
+    contact: "1234567890",
+  };
+
+  // person1.name = "Razu Molla";
+
+  //  6. Record
+
+  // Record
+  // type MyObj = {
+  //   a: string;
+  //   b: string;
+  // };
+
+  type MyObj = Record<string, string>; // a : "as"
+
+  const obj1: MyObj = {
+    a: "as",
+    b: "as",
+    c: "as",
+    d: "as",
+    e: "as",
+  };
+
+  // const EmptyObj: {} = {};
+  const EmptyObj: Record<string, unknown> = {};
+
+  //
+}
