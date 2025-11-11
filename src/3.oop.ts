@@ -211,7 +211,7 @@
 }
 
 {
-  // access modifiers: readonly, private, public ,protected
+  //3.5= access modifiers: readonly, private, public ,protected
   class BankAccount {
     public readonly id: number;
     public name: string;
@@ -249,7 +249,7 @@
 }
 
 {
-  // getter and setter
+  //3.6 getter and setter
   class BankAccount {
     public readonly id: number;
     public name: string;
@@ -286,6 +286,115 @@
 
   const myBalance = goribManusherAccount.balance; // property er mto kore
   console.log(myBalance);
+
+  //
+}
+
+{
+  //3.7 static
+  class Counter {
+    static count: number = 0;
+
+    static increment() {
+      return (Counter.count = Counter.count + 1);
+    }
+
+    static decrement() {
+      return (Counter.count = Counter.count - 1);
+    }
+  }
+
+  // const instance1 = new Counter();
+  console.log(Counter.increment()); // 1 -> different memory
+  // 1 -> different memory
+
+  // const instance2 = new Counter();
+  console.log(Counter.increment()); // 1  --> different memory
+  // 1  --> different memory
+
+  // const instance3 = new Counter();
+  console.log(Counter.increment());
+  //
+}
+
+{
+  //3.8 = polymorphisom
+
+  class Person {
+    getSleep() {
+      console.log(`I am sleeping for 8 hours per day`);
+    }
+  }
+
+  class Student extends Person {
+    getSleep() {
+      console.log(`I am sleeping for 7 hours per day`);
+    }
+  }
+
+  class Developer extends Person {
+    getSleep() {
+      console.log(`I am sleeping for 6 hours per day`);
+    }
+  }
+
+  const getSleepingHours = (param: Person) => {
+    param.getSleep();
+  };
+
+  const person1 = new Person();
+  const person2 = new Student();
+  const person3 = new Developer();
+
+  getSleepingHours(person1);
+  getSleepingHours(person2);
+  getSleepingHours(person3);
+
+  // anoter way
+  class Shape {
+    getArea(): number {
+      return 0;
+    }
+  }
+
+  // pi* r* r
+  class Circle extends Shape {
+    radius: number;
+    constructor(radius: number) {
+      super();
+      this.radius = radius;
+    }
+
+    getArea(): number {
+      return Math.PI * this.radius * this.radius;
+    }
+  }
+
+  // height * width
+  class Reactangle extends Shape {
+    height: number;
+    width: number;
+
+    constructor(height: number, width: number) {
+      super();
+      this.height = height;
+      this.width = width;
+    }
+
+    getArea(): number {
+      return this.height * this.width;
+    }
+  }
+
+  const getShapeArea = (param: Shape) => {
+    console.log(param.getArea());
+  };
+
+  const shape1 = new Shape();
+  const shape2 = new Circle(10);
+  const shape3 = new Reactangle(10, 20);
+
+  getShapeArea(shape3);
 
   //
 }
