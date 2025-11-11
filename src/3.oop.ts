@@ -398,3 +398,106 @@
 
   //
 }
+
+{
+  // abstraction  : 1. interface 2. abstract
+ 
+  // idea
+  interface Vehicle1 {
+    startEngine(): void;
+    stopEngine(): void;
+    move(): void;
+  }
+
+  // real implementation
+  class Car1 implements Vehicle1 {
+    startEngine(): void {
+      console.log(`I am starting the car engine`);
+    }
+    stopEngine(): void {
+      console.log("I am stopping the car engine");
+    }
+    move(): void {
+      console.log(`I am moving the car`);
+    }
+    test() {
+      console.log(`I am just testing`);
+    }
+  }
+
+  const toyotaCar = new Car1();
+  toyotaCar.startEngine();
+
+  // abstract class
+
+  // idea
+  abstract class Car2 {
+    abstract startEngine(): void;
+    abstract stopEngine(): void;
+    abstract move(): void;
+    test() {
+      console.log(`I am just testing`);
+    }
+  }
+
+  class ToyotaCar extends Car2 {
+    startEngine(): void {
+      console.log("I am starting the car  engine");
+    }
+    stopEngine(): void {
+      console.log("I am stopping the car engine");
+    }
+    move(): void {
+      console.log("I am moving  the car");
+    }
+  }
+
+  // const hondaCar = new Car2();
+  // hondaCar.startEngine();
+
+  //
+}
+
+
+{
+  //3.10 access modifiers = Encapsulation
+  class BankAccount {
+    public readonly id: number;
+    public name: string;
+    protected _balance: number;
+
+    constructor(id: number, name: string, balance: number) {
+      this.id = id;
+      this.name = name;
+      this._balance = balance;
+    }
+
+   public  addDeposit(amount: number) {
+      this._balance = this._balance + amount;
+    }
+
+   private getBalance() {
+      return this._balance;
+    }
+
+    getHiddenMethod(){
+      return this.getBalance()
+    }
+  }
+
+  class StudentAccount extends BankAccount{
+    test(){
+      this.getHiddenMethod()
+    }
+  }
+
+  const goribManusherAccount = new BankAccount(111, "Mr. gorib", 20);
+  // goribManusherAccount.balance = 0;
+  goribManusherAccount.addDeposit(20);
+  const myBalance = goribManusherAccount.getBalance();
+  console.log(myBalance);
+
+  goribManusherAccount.
+
+  //
+}
